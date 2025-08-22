@@ -1,0 +1,298 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+.dashboard {
+    display: flex;
+    min-height: 100vh;
+    background: #f6f9fc;
+}
+
+.sidebar {
+    width: 240px;
+    background: #fff;
+    padding: 20px;
+    border-right: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+    color: #2d3748;
+}
+
+.subtitle {
+    font-size: 13px;
+    color: #718096;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #4a5568;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: background 0.3s;
+}
+
+.menu a:hover {
+    background: #edf2f7;
+}
+
+.menu a.active {
+    background: #e6f0ff;
+    color: #2b6cb0;
+    font-weight: bold;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f7fafc;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.user img {
+    border-radius: 50%;
+}
+
+.name {
+    font-weight: bold;
+    font-size: 14px;
+    color: #2d3748;
+}
+
+.role {
+    font-size: 12px;
+    color: #718096;
+}
+
+.content {
+    flex: 1;
+    padding: 30px;
+}
+
+header h1 {
+    font-size: 24px;
+    color: #2d3748;
+    text-align: center;
+}
+
+header p {
+    color: #718096;
+    margin-bottom: 25px;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.cards {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.card {
+    flex: 1;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.card .title {
+    font-size: 12px;
+    color: #718096;
+    margin-bottom: 10px;
+}
+
+.card .number {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.blue {
+    color: #3182ce;
+}
+
+.red {
+    color: #e53e3e;
+}
+
+.green {
+    color: #38a169;
+}
+
+.activity {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.activity h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #2d3748;
+}
+
+.activity .empty {
+    text-align: center;
+    color: #a0aec0;
+    font-size: 14px;
+}
+
+/* Sesion de alertas activas*/
+.alertas_activas {
+    padding: 20px;
+    background: #fff;
+}
+
+.alertas_activas h3 {
+    padding: 20px;
+    background-color: #fff;
+}
+
+.products_1 {
+    padding: 20px;
+    border-left: 4px solid #f00;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    background-color: #f001;
+}
+
+.products_2 {
+    padding: 20px;
+    border-left: 4px solid #070a;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    background-color: #0701;
+}
+
+.products_3 {
+    padding: 20px;
+    border-left: 4px solid #070a;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    background-color: #0701;
+}
+
+.products_1 p {
+    color: #ccc;
+    font-size: 15px;
+}
+
+.products_2 p {
+    color: #ccc;
+    font-size: 15px;
+}
+
+.products_3 p {
+    color: #ccc;
+    font-size: 15px;
+}
+
+/*Sesion de Proveedores*/
+
+.box {
+    display: flex;
+    padding: 20px;
+    background: #fff;
+}
+
+.reportes_disponibles .mensual {
+    text-align: center;
+    padding: 30px;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    background-color: #00f1;
+}
+
+.reportes_disponibles .mensual h4 {
+    margin-bottom: 20px;
+}
+
+.reportes_disponibles .mensual h5 {
+    font-weight: 100;
+}
+
+.reportes_disponibles .vencido {
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    background-color: #00f1;
+}
+
+.reportes_disponibles .vencido h4 {
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+.reportes_disponibles .vencido h5 {
+    font-weight: 100;
+}
+.reportes_disponibles .consumo_area {
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    background-color: #00f1;
+}
+
+.reportes_disponibles .consumo_area h4 {
+    margin-bottom: 20px;
+}
+
+.reportes_disponibles .consumo_area h5 {
+    font-weight: 100;
+}
+.reportes_disponibles .proveedores {
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    background-color: #00f1;
+}
+
+.reportes_disponibles .proveedores h4 {
+    margin-bottom: 20px;
+}
+
+.reportes_disponibles .proveedores h5 {
+    font-weight: 100;
+}
