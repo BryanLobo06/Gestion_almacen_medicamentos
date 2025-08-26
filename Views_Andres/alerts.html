@@ -5,33 +5,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MediControl - Alertas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./css.css">
 </head>
 
 <body>
+    <label for="toggle" id="label_toggle"><i class="fa-solid fa-moon"></i></label>
+    <input type="checkbox" id="toggle">
     <div class="dashboard">
         <aside class="sidebar">
-            <h2 class="logo">MediControl</h2>
+            <h2 class="logo" id="title_medic">MediControl</h2>
             <p class="subtitle">Sistema de Gestión</p>
 
             <nav class="menu">
-                <a href="#" class="active"> Inventario</a>
+                <a href="./inventario.html"> Inventario</a>
                 <a href="#"> Alertas</a>
-                <a href="#"> Reportes</a>
+                <a href="./reports.html"> Reportes</a>
             </nav>
 
-            <div class="user">
-                <img src="https://via.placeholder.com/40" alt="usuario">
-                <div>
-                    <p class="name">Sr Usuario</p>
-                    <span class="role">Info aca</span>
-                </div>
-            </div>
         </aside>
 
         <main class="content">
             <header>
-                <h1>Inventario</h1>
+                <div class="user">
+                    <div id="sr_user">
+                        <button class="name"></button>
+                    </div>
+                </div>
+                <h1>Alerts</h1>
                 <p>Resumen del estado actual del inventario</p>
             </header>
 
@@ -67,6 +70,7 @@
             </section>
         </main>
     </div>
+    <script src="app.js"></script>
 </body>
 
 </html>
