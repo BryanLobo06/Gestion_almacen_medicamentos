@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.36, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: drugstore
+-- Host: localhost    Database: drugstore
 -- ------------------------------------------------------
--- Server version	8.0.43-0ubuntu0.24.04.1
+-- Server version	8.0.43
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -171,6 +171,31 @@ LOCK TABLES `suppliers` WRITE;
 INSERT INTO `suppliers` VALUES (1,'Distribuidora SaludPlus','contacto@saludplus.com','321-1111','Zona Industrial 12',1,500,'Genfar'),(2,'Farmedex S.A.','ventas@farmedex.com','322-2222','Av. de la Salud 34',2,300,'MK'),(3,'Medicent S.A.','info@medicent.com','323-3333','Calle Farma 78',3,200,'Sandoz'),(4,'BioPharma','soporte@biopharma.com','324-4444','Carrera 10 #5-30',4,250,'Pfizer'),(5,'AlfaMedic','logistica@alfamedic.com','325-5555','Diagonal 15 #23',5,400,'Genfar');
 /*!40000 ALTER TABLE `suppliers` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `users` (
+  `id_user` int NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(255) DEFAULT NULL,
+  `password_user` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_user`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'administrador','administrador');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -181,4 +206,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-08-28 11:14:21
+-- Dump completed on 2025-08-28 22:17:06
