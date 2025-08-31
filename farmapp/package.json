@@ -1,0 +1,50 @@
+{
+  "name": "farmapp",
+  "version": "1.0.0",
+  "description": "Sistema de inventario para farmacia",
+  "main": "start.js",
+  "scripts": {
+    "start": "node start.js",
+    "dev": "nodemon start.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "setup-db": "node setup-db.js"
+  },
+  "keywords": [
+    "farmacia",
+    "inventario",
+    "nodejs",
+    "express",
+    "mysql"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "debug": "^4.3.4",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "hbs": "^4.2.0",
+    "helmet": "^7.0.0",
+    "hpp": "^0.2.3",
+    "http-errors": "^2.0.0",
+    "jsonwebtoken": "^9.0.0",
+    "method-override": "^3.0.0",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.6.0",
+    "xss-clean": "^0.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.36.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-node": "^11.1.0",
+    "nodemon": "^3.0.1",
+    "prettier": "^2.8.7"
+  }
+}
