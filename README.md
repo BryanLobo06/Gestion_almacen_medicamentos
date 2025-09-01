@@ -1,96 +1,95 @@
-# Sistema de Gestión de Farmacia
+# Pharmacy Management System
+Complete web application for the comprehensive management of a pharmacy, developed with Node.js, Express, MySQL, Handlebars, and modern web development technologies.
 
-Aplicación web completa para la gestión integral de una farmacia, desarrollada con Node.js, Express, MySQL, Handlebars y tecnologías modernas de desarrollo web.
+## 🚀 Main Features
 
-## 🚀 Características Principales
+- 🔐 Secure authentication with roles (administrator/employee)
+- 📦 Complete product management (CRUD)
+- 📊 Inventory control with low stock alerts
+- 🏷️ Category and supplier management
+- 💰 Sales and billing records
+- 📈 Dashboard with real-time statistics
+- 🌐 Responsive and modern interface
+- 🔒 Enhanced security with Helmet, CORS, and XSS protection
+- ⚡ Performance optimization with compression and caching
 
-- 🔐 Autenticación segura con roles (administrador/empleado)
-- 📦 Gestión completa de productos (CRUD)
-- 📊 Control de inventario con alertas de stock bajo
-- 🏷️ Gestión de categorías y proveedores
-- 💰 Registro de ventas y facturación
-- 📈 Panel de control con estadísticas en tiempo real
-- 🌐 Interfaz responsiva y moderna
-- 🔒 Seguridad mejorada con Helmet, CORS y protección contra XSS
-- ⚡ Optimización de rendimiento con compresión y caché
+## 🛠️ System Requirements
 
-## 🛠️ Requisitos del Sistema
+- Node.js (v16 or higher)
+- MySQL (v8.0 or higher)
+- npm (v8 or higher) or yarn
 
-- Node.js (v16 o superior)
-- MySQL (v8.0 o superior)
-- npm (v8 o superior) o yarn
+## 🚀 Quick Installation
 
-## 🚀 Instalación Rápida
-
-1. Clonar el repositorio:
+1. Clone the repository:
    ```bash
    git clone https://github.com/BryanLobo06/Gestion_almacen_medicamentos.git
    cd farmapp
    ```
 
-2. Instalar dependencias:
+2. Install dependencies:
    ```bash
    npm install
    # o
    yarn
    ```
 
-3. Configuración del entorno:
-   - Copiar el archivo `.env.example` a `.env`
-   - Configurar las variables de entorno según tu configuración local
+3. Environment configuration:
+   - Copy the file `.env.example` to `.env`
+   - Configure environment variables according to your local configuration
 
-4. Configuración de la base de datos:
+4. Database Configuration:
    ```bash
-   # Crear la base de datos (asegúrate de que MySQL esté en ejecución)
+   # Create the database (make sure MySQL is running)
    mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS drugstore;"
    
-   # Ejecutar migraciones y seeders
+   # Run migrations and seeders
    npm run setup-db
    ```
 
-## 🏃‍♂️ Iniciar la Aplicación
+## 🏃‍♂️ Start the Application
 
-Para el entorno de desarrollo:
+For the development environment:
 ```bash
 npm run dev
 ```
 
-Para producción:
+For production:
 ```bash
 npm start
 ```
 
-La aplicación estará disponible en:
+The application will be available in:
 - **URL local:** http://localhost:3000
-- **Usuario por defecto (admin):** admin@farmacia.com
-- **Contraseña:** admin123
+- **Default user(admin):** admin@farmacia.com
+- **Password:** admin123
 
-## 🛠️ Estructura del Proyecto
+## 🛠️ Project Structure
 
 ```
 farmapp/
-├── config/           # Configuraciones de la aplicación
-├── controllers/      # Controladores de la lógica de negocio
-├── middleware/       # Middlewares personalizados
-├── models/           # Modelos de base de datos
-├── public/           # Archivos estáticos (CSS, JS, imágenes)
+├── config/           # Application settings
+├── controllers/      # Business logic controllers
+├── middleware/       # Custom middlewares
+├── models/           # Database models
+├── public/           # Static files (CSS, JS, images)
 │   ├── css/
 │   ├── js/
 │   └── images/
-├── routes/           # Rutas de la API
-├── utils/            # Utilidades y helpers
-├── views/            # Plantillas Handlebars
+├── routes/           # API Routes
+├── utils/            # Utilities and helpers
+├── views/            # Handlebar Templates
 │   ├── layouts/
 │   ├── partials/
 │   └── ...
-├── .env.example      # Variables de entorno de ejemplo
-├── app.js            # Punto de entrada de la aplicación
+├── .env.example      # Example environment variables
+├── app.js            # Application entry point
 └── package.json
 ```
 
-## 🔧 Variables de Entorno
+## 🔧 Environment Variables
 
-Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
+Create a `.env` file in the project root with the following variables:
 
 ```env
 # Server
@@ -114,34 +113,34 @@ SESSION_SECRET=tu_clave_secreta_sesion
 
 ## 🧪 Testing
 
-Para ejecutar los tests:
+To run the tests:
 ```bash
 npm test
 ```
 
-## 🛡️ Seguridad
+## 🛡️ Security
 
-La aplicación incluye las siguientes medidas de seguridad:
-- Protección contra XSS
-- Prevención de inyección SQL
-- Headers de seguridad con Helmet
+The application includes the following security measures:
+- XSS protection
+- SQL injection prevention
+- Helmet security headers
 - Rate limiting
-- Validación de entrada
-- CORS configurado
+- Input validation
+- CORS configured
 
-## 🤝 Contribuir
+## 🤝 Contribute
 
-1. Haz un Fork del proyecto
-2. Crea tu rama de características (`git checkout -b feature/AmazingFeature`)
-3. Haz commit de tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Haz push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## 📄 Licencia
+## 📄 License
 
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## ✨ Créditos
+## ✨ Credits
 
 - [Tu Nombre](https://github.com/tu-usuario)
 - [Contribuidores](https://github.com/tu-usuario/farmapp/contributors)
@@ -149,37 +148,37 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 ---
 
 <div align="center">
-  Hecho con ❤️ para una mejor gestión farmacéutica
+  Made with ❤️ for better pharmaceutical management
 </div>
 
-- **Empleado:**
-  - Usuario: empleado1
-  - Contraseña: empleado123
+- **Employee:**
+  - User: empleado1
+  - Password: empleado123
 
-## Estructura del Proyecto
+## Project Structure
 
 ```
 farmapp/
-├── config/               # Configuraciones
-├── controllers/          # Controladores
-├── middleware/           # Middlewares
-├── models/              # Modelos de datos
-├── public/              # Archivos estáticos
+├── config/               # Settings
+├── controllers/          # Drivers
+├── middleware/           # Middleware
+├── models/              # Data models
+├── public/              # Static files
 │   ├── css/
 │   ├── js/
 │   └── images/
-├── routes/              # Rutas de la aplicación
-├── utils/               # Utilidades
-├── .env                 # Variables de entorno
-├── .env.example         # Ejemplo de variables de entorno
-├── app.js               # Aplicación principal
+├── routes/              # Application routes
+├── utils/               # Utilities
+├── .env                 # Environment variables
+├── .env.example         # Example of environment variables
+├── app.js               # Main application
 ├── package.json
 └── README.md
 ```
 
-## Variables de Entorno
+## Environment Variables
 
-Crear un archivo `.env` en la raíz del proyecto con las siguientes variables:
+Create a `.env` file in the project root with the following variables:
 
 ```env
 # Server
@@ -204,28 +203,28 @@ APP_NAME=FarmApp
 APP_URL=http://localhost:3000
 ```
 
-## Seguridad
+## Security
 
-- Autenticación con JWT
-- Protección contra XSS
-- Headers de seguridad con Helmet
-- Sanitización de datos de entrada
-- Protección contra inyección SQL
-- CORS habilitado
+- JWT authentication
+- XSS protection
+- Helmet security headers
+- Input data sanitization
+- SQL injection protection
+- CORS enabled
 
-## Despliegue
+## Deployment
 
-1. Configurar las variables de entorno para producción
-2. Instalar dependencias de producción:
+1. Configure environment variables for production
+2. Install production dependencies:
    ```bash
    npm install --production
    ```
-3. Iniciar la aplicación:
+3. Start the application:
    ```bash
    npm start
    ```
 
-## Tecnologías Utilizadas
+## Technologies Used
 
 - **Backend:** Node.js, Express
 - **Base de datos:** MySQL
