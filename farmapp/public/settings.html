@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración - Farmacia App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="dashboard-header">
+        <a href="/" class="header-brand">Farmacia App</a>
+        <button type="button" class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav class="header-nav" aria-label="Navegación principal">
+            <div class="user-info" id="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span id="username">Usuario</span>
+            </div>
+            <a href="#" class="logout-btn" id="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Cerrar sesión</span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebarMenu">
+        <nav class="sidebar-nav" aria-label="Navegación lateral">
+            <ul>
+                <li class="nav-item">
+                    <a href="/dashboard.html" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/products.html" class="nav-link">
+                        <i class="fas fa-box"></i>
+                        <span>Productos</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/categories.html" class="nav-link">
+                        <i class="fas fa-tags"></i>
+                        <span>Categorías</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/reports.html" class="nav-link">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Reportes</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/settings.html" class="nav-link active">
+                        <i class="fas fa-cog"></i>
+                        <span>Configuración</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Configuración</h1>
+        </div>
+
+        <div class="settings-container">
+            <div class="settings-sidebar">
+                <ul class="settings-menu">
+                    <li class="active" data-target="general-settings">
+                        <i class="fas fa-sliders-h"></i> General
+                    </li>
+                    <li data-target="user-profile">
+                        <i class="fas fa-user"></i> Perfil de Usuario
+                    </li>
+                    <li data-target="security">
+                        <i class="fas fa-shield-alt"></i> Seguridad
+                    </li>
+                    <li data-target="notifications">
+                        <i class="fas fa-bell"></i> Notificaciones
+                    </li>
+                    <li data-target="backup">
+                        <i class="fas fa-database"></i> Respaldo
+                    </li>
+                </ul>
+            </div>
+
+            <div class="settings-content">
+                <!-- General Settings -->
+                <div id="general-settings" class="settings-section active">
+                    <h2>Configuración General</h2>
+                    <form id="generalSettingsForm">
+                        <div class="form-group">
+                            <label for="companyName">Nombre de la Farmacia</label>
+                            <input type="text" id="companyName" class="form-control" value="Farmacia Central" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="companyAddress">Dirección</label>
+                            <input type="text" id="companyAddress" class="form-control" value="Av. Principal #123" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="companyPhone">Teléfono</label>
+                                <input type="tel" id="companyPhone" class="form-control" value="+1 234 567 8900" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="companyEmail">Correo Electrónico</label>
+                                <input type="email" id="companyEmail" class="form-control" value="contacto@farmacia.com" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="companyLogo">Logo de la Farmacia</label>
+                            <div class="file-upload">
+                                <input type="file" id="companyLogo" accept="image/*" class="form-control-file">
+                                <small class="form-text text-muted">Tamaño recomendado: 200x60px</small>
+                            </div>
+                            <div class="logo-preview mt-2">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="timezone">Zona Horaria</label>
+                            <select id="timezone" class="form-control" required>
+                                <option value="-6">(GMT-06:00) Centro de México</option>
+                                <option value="-5">(GMT-05:00) Este de México</option>
+                                <option value="-7">(GMT-07:00) Pacífico de México</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="currency">Moneda</label>
+                            <select id="currency" class="form-control" required>
+                                <option value="MXN">Peso Mexicano (MXN)</option>
+                                <option value="USD">Dólar Estadounidense (USD)</option>
+                                <option value="EUR">Euro (EUR)</option>
+                            </select>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="enableTax" checked>
+                            <label class="form-check-label" for="enableTax">Habilitar impuestos</label>
+                        </div>
+                        <div class="form-group" id="taxRateGroup">
+                            <label for="taxRate">Tasa de Impuesto (%)</label>
+                            <input type="number" id="taxRate" class="form-control" value="16" min="0" max="100" step="0.01">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </form>
+                </div>
+
+                <!-- User Profile -->
+                <div id="user-profile" class="settings-section">
+                    <h2>Perfil de Usuario</h2>
+                    <form id="userProfileForm">
+                        <div class="user-avatar text-center mb-4">
+                            <div class="avatar-preview">
+                                <img src="/img/avatar.png" alt="Avatar" id="avatarPreview" class="rounded-circle">
+                            </div>
+                            <div class="mt-2">
+                                <label for="avatarUpload" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-camera"></i> Cambiar Foto
+                                </label>
+                                <input type="file" id="avatarUpload" accept="image/*" style="display: none;">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="firstName">Nombre</label>
+                                <input type="text" id="firstName" class="form-control" value="Juan" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="lastName">Apellidos</label>
+                                <input type="text" id="lastName" class="form-control" value="Pérez López" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="userEmail">Correo Electrónico</label>
+                            <input type="email" id="userEmail" class="form-control" value="juan.perez@farmacia.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="userPhone">Teléfono</label>
+                            <input type="tel" id="userPhone" class="form-control" value="+1 234 567 8900">
+                        </div>
+                        <div class="form-group">
+                            <label for="userRole">Rol de Usuario</label>
+                            <select id="userRole" class="form-control" disabled>
+                                <option value="admin">Administrador</option>
+                                <option value="manager">Gerente</option>
+                                <option value="cashier">Cajero</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Actualizar Perfil</button>
+                    </form>
+                </div>
+
+                <!-- Security Settings -->
+                <div id="security" class="settings-section">
+                    <h2>Seguridad</h2>
+                    <form id="securitySettingsForm">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i> Por seguridad, se recomienda cambiar la contraseña periódicamente.
+                        </div>
+                        <div class="form-group">
+                            <label for="currentPassword">Contraseña Actual</label>
+                            <div class="input-group">
+                                <input type="password" id="currentPassword" class="form-control" required>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary toggle-password" type="button">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">Nueva Contraseña</label>
+                            <div class="input-group">
+                                <input type="password" id="newPassword" class="form-control" required>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary toggle-password" type="button">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <small class="form-text text-muted">Mínimo 8 caracteres, incluyendo mayúsculas, minúsculas y números.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirmar Nueva Contraseña</label>
+                            <div class="input-group">
+                                <input type="password" id="confirmPassword" class="form-control" required>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary toggle-password" type="button">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="twoFactorAuth">
+                            <label class="form-check-label" for="twoFactorAuth">Habilitar autenticación de dos factores</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Actualizar Contraseña</button>
+                    </form>
+                </div>
+
+                <!-- Notifications Settings -->
+                <div id="notifications" class="settings-section">
+                    <h2>Configuración de Notificaciones</h2>
+                    <form id="notificationsSettingsForm">
+                        <h4>Correo Electrónico</h4>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="emailSales" checked>
+                            <label class="form-check-label" for="emailSales">Nuevas ventas</label>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="emailLowStock" checked>
+                            <label class="form-check-label" for="emailLowStock">Productos con bajo stock</label>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="emailUpdates">
+                            <label class="form-check-label" for="emailUpdates">Actualizaciones del sistema</label>
+                        </div>
+                        <h4 class="mt-4">Notificaciones en el Sistema</h4>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="notifSales" checked>
+                            <label class="form-check-label" for="notifSales">Nuevas ventas</label>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="notifStock" checked>
+                            <label class="form-check-label" for="notifStock">Alertas de inventario</label>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="notifUpdates" checked>
+                            <label class="form-check-label" for="notifUpdates">Actualizaciones del sistema</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-3">Guardar Preferencias</button>
+                    </form>
+                </div>
+
+                <!-- Backup Settings -->
+                <div id="backup" class="settings-section">
+                    <h2>Respaldo y Restauración</h2>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Crear Respaldo</h5>
+                            <p class="card-text">Crea una copia de seguridad de toda la información del sistema.</p>
+                            <button type="button" class="btn btn-primary" id="createBackupBtn">
+                                <i class="fas fa-download"></i> Crear Respaldo
+                            </button>
+                            <div class="mt-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="includeMedia" checked>
+                                    <label class="form-check-label" for="includeMedia">
+                                        Incluir archivos multimedia (imágenes de productos)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Restaurar desde Respaldo</h5>
+                            <p class="card-text">Restaura la base de datos desde un archivo de respaldo.</p>
+                            <div class="form-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="restoreFile">
+                                    <label class="custom-file-label" for="restoreFile">Seleccionar archivo de respaldo</label>
+                                </div>
+                                <small class="form-text text-muted">Solo se permiten archivos .sql o .backup</small>
+                            </div>
+                            <button type="button" class="btn btn-warning mt-2" id="restoreBackupBtn" disabled>
+                                <i class="fas fa-upload"></i> Restaurar Respaldo
+                            </button>
+                            <div class="alert alert-warning mt-3">
+                                <i class="fas fa-exclamation-triangle"></i> <strong>¡Advertencia!</strong> 
+                                Restaurar desde un respaldo sobrescribirá todos los datos actuales.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mt-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Configuración Automática de Respaldos</h5>
+                            <div class="form-group">
+                                <label for="backupFrequency">Frecuencia de Respaldos Automáticos</label>
+                                <select id="backupFrequency" class="form-control">
+                                    <option value="disabled">Deshabilitado</option>
+                                    <option value="daily" selected>Diario</option>
+                                    <option value="weekly">Semanal</option>
+                                    <option value="monthly">Mensual</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="backupTime">Hora del Respaldo</label>
+                                <input type="time" id="backupTime" class="form-control" value="02:00">
+                            </div>
+                            <div class="form-group">
+                                <label for="backupRetention">Retención de Respaldos</label>
+                                <div class="input-group">
+                                    <input type="number" id="backupRetention" class="form-control" value="30" min="1">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">días</span>
+                                    </div>
+                                </div>
+                                <small class="form-text text-muted">Número de días para conservar los respaldos automáticos</small>
+                            </div>
+                            <button type="button" class="btn btn-primary" id="saveBackupSettings">
+                                <i class="fas fa-save"></i> Guardar Configuración
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Toggle sidebar on mobile
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.body.classList.toggle('sidebar-collapsed');
+        });
+
+        // Toggle password visibility
+        document.querySelectorAll('.toggle-password').forEach(button => {
+            button.addEventListener('click', function() {
+                const input = this.closest('.input-group').querySelector('input');
+                const type = input.type === 'password' ? 'text' : 'password';
+                input.type = type;
+                this.querySelector('i').classList.toggle('fa-eye');
+                this.querySelector('i').classList.toggle('fa-eye-slash');
+            });
+        });
+
+        // Toggle settings sections
+        document.querySelectorAll('.settings-menu li').forEach(item => {
+            item.addEventListener('click', function() {
+                // Remove active class from all items
+                document.querySelectorAll('.settings-menu li').forEach(i => i.classList.remove('active'));
+                document.querySelectorAll('.settings-section').forEach(s => s.classList.remove('active'));
+                
+                // Add active class to clicked item
+                this.classList.add('active');
+                const target = this.getAttribute('data-target');
+                document.getElementById(target).classList.add('active');
+            });
+        });
+
+        // Handle file input change
+        document.getElementById('restoreFile').addEventListener('change', function() {
+            const fileName = this.files[0] ? this.files[0].name : 'Seleccionar archivo de respaldo';
+            this.nextElementSibling.textContent = fileName;
+            document.getElementById('restoreBackupBtn').disabled = !this.files[0];
+        });
+
+        // Toggle tax rate field
+        document.getElementById('enableTax').addEventListener('change', function() {
+            document.getElementById('taxRateGroup').style.display = this.checked ? 'block' : 'none';
+        });
+
+        // Preview avatar image
+        document.getElementById('avatarUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('avatarPreview').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Preview company logo
+        document.getElementById('companyLogo').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('logoPreview').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>

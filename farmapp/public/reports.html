@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes - Farmacia App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="dashboard-header">
+        <a href="/" class="header-brand">Farmacia App</a>
+        <button type="button" class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav class="header-nav" aria-label="Navegación principal">
+            <div class="user-info" id="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span id="username">Usuario</span>
+            </div>
+            <a href="#" class="logout-btn" id="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Cerrar sesión</span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebarMenu">
+        <nav class="sidebar-nav" aria-label="Navegación lateral">
+            <ul>
+                <li class="nav-item">
+                    <a href="/dashboard.html" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/products.html" class="nav-link">
+                        <i class="fas fa-box"></i>
+                        <span>Productos</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/categories.html" class="nav-link">
+                        <i class="fas fa-tags"></i>
+                        <span>Categorías</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/reports.html" class="nav-link active">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Reportes</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/settings.html" class="nav-link">
+                        <i class="fas fa-cog"></i>
+                        <span>Configuración</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Reportes</h1>
+            <div class="page-actions">
+                <button type="button" class="btn btn-primary" id="exportPdf">
+                    <i class="fas fa-file-pdf"></i> Exportar PDF
+                </button>
+                <button type="button" class="btn btn-success" id="exportExcel">
+                    <i class="fas fa-file-excel"></i> Exportar Excel
+                </button>
+            </div>
+        </div>
+
+        <div class="reports-grid">
+            <!-- Filtros de Reporte -->
+            <div class="report-filters card">
+                <h3>Filtros</h3>
+                <form id="reportFilters">
+                    <div class="form-group">
+                        <label for="reportType">Tipo de Reporte</label>
+                        <select id="reportType" class="form-control">
+                            <option value="sales">Ventas</option>
+                            <option value="inventory">Inventario</option>
+                            <option value="products">Productos</option>
+                            <option value="categories">Categorías</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dateRange">Rango de Fechas</label>
+                        <select id="dateRange" class="form-control">
+                            <option value="today">Hoy</option>
+                            <option value="yesterday">Ayer</option>
+                            <option value="thisWeek">Esta Semana</option>
+                            <option value="lastWeek">Semana Pasada</option>
+                            <option value="thisMonth">Este Mes</option>
+                            <option value="lastMonth">Mes Pasado</option>
+                            <option value="custom">Personalizado</option>
+                        </select>
+                    </div>
+                    <div class="form-group date-range-custom" style="display: none;">
+                        <label>Rango Personalizado</label>
+                        <div class="date-inputs">
+                            <input type="date" id="startDate" class="form-control">
+                            <span>a</span>
+                            <input type="date" id="endDate" class="form-control">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Generar Reporte</button>
+                </form>
+            </div>
+
+            <!-- Gráfico Principal -->
+            <div class="main-chart card">
+                <div class="chart-header">
+                    <h3>Ventas Mensuales</h3>
+                    <div class="chart-actions">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Día</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary active">Mes</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Año</button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="mainChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Resumen de Ventas -->
+            <div class="sales-summary card">
+                <h3>Resumen de Ventas</h3>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <div class="summary-value">$24,580.50</div>
+                        <div class="summary-label">Ventas Totales</div>
+                        <div class="summary-change positive">
+                            <i class="fas fa-arrow-up"></i> 12% vs mes anterior
+                        </div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value">348</div>
+                        <div class="summary-label">Transacciones</div>
+                        <div class="summary-change positive">
+                            <i class="fas fa-arrow-up"></i> 8% vs mes anterior
+                        </div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value">$70.63</div>
+                        <div class="summary-label">Ticket Promedio</div>
+                        <div class="summary-change negative">
+                            <i class="fas fa-arrow-down"></i> 3% vs mes anterior
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Productos Más Vendidos -->
+            <div class="top-products card">
+                <div class="card-header">
+                    <h3>Productos Más Vendidos</h3>
+                    <select class="form-control form-control-sm" aria-label="Default select example">
+                        <option>Este Mes</option>
+                        <option>Mes Pasado</option>
+                        <option>Últimos 3 Meses</option>
+                    </select>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Ventas</th>
+                                <th>Cantidad</th>
+                                <th>% del Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Paracetamol 500mg</td>
+                                <td>$1,245.00</td>
+                                <td>125</td>
+                                <td>
+                                    <div class="progress">
+                                        <div class="progress-bar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%"></div>
+                                    </div>
+                                    <span>45%</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Ibuprofeno 400mg</td>
+                                <td>$980.50</td>
+                                <td>89</td>
+                                <td>
+                                    <div class="progress">
+                                        <div class="progress-bar" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" style="width: 35%"></div>
+                                    </div>
+                                    <span>35%</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Amoxicilina 500mg</td>
+                                <td>$756.25</td>
+                                <td>65</td>
+                                <td>
+                                    <div class="progress">
+                                        <div class="progress-bar" aria-valuenow="28" aria-valuemin="0" aria-valuemax="100" style="width: 28%"></div>
+                                    </div>
+                                    <span>28%</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Toggle sidebar on mobile
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.body.classList.toggle('sidebar-collapsed');
+        });
+
+        // Toggle custom date range
+        document.getElementById('dateRange').addEventListener('change', function() {
+            const customDateRange = document.querySelector('.date-range-custom');
+            customDateRange.style.display = this.value === 'custom' ? 'block' : 'none';
+        });
+
+        // Initialize main chart
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('mainChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                    datasets: [{
+                        label: 'Ventas 2023',
+                        data: [12000, 15000, 18000, 14000, 16000, 19000, 21000, 20000, 22000, 24000, 23000, 25000],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        tension: 0.3,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

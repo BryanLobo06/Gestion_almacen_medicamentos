@@ -73,7 +73,7 @@ async function initializeDatabase() {
         barcode VARCHAR(50) UNIQUE,
         price DECIMAL(10, 2) NOT NULL,
         cost_price DECIMAL(10, 2) NOT NULL,
-        stock_quantity INT NOT NULL DEFAULT 0,
+        stock INT NOT NULL DEFAULT 0,
         min_stock_level INT DEFAULT 10,
         supplier_id INT,
         expiration_date DATE,

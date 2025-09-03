@@ -1,209 +1,271 @@
--- MySQL dump 10.13  Distrib 8.0.43, for Win64 (x86_64)
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost    Database: drugstore
--- ------------------------------------------------------
--- Server version	8.0.43
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 03-09-2025 a las 01:31:24
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Table structure for table `deliverys`
+-- Base de datos: `drugstore`
 --
 
-DROP TABLE IF EXISTS `deliverys`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `deliverys` (
-  `id_delivery` int NOT NULL AUTO_INCREMENT,
-  `delivery_date` varchar(255) DEFAULT NULL,
-  `id_product` int DEFAULT NULL,
-  `id_supplier` int DEFAULT NULL,
-  `amount` int DEFAULT NULL,
-  `id_employee` int DEFAULT NULL,
-  `delivery` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id_delivery`),
-  KEY `id_product` (`id_product`),
-  KEY `id_supplier` (`id_supplier`),
-  KEY `id_employee` (`id_employee`),
-  CONSTRAINT `deliverys_ibfk_1` FOREIGN KEY (`id_product`) REFERENCES `products` (`id_product`),
-  CONSTRAINT `deliverys_ibfk_2` FOREIGN KEY (`id_supplier`) REFERENCES `suppliers` (`id_supplier`),
-  CONSTRAINT `deliverys_ibfk_3` FOREIGN KEY (`id_employee`) REFERENCES `employees` (`id_employee`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `deliverys`
+-- Estructura de tabla para la tabla `categories`
 --
 
-LOCK TABLES `deliverys` WRITE;
-/*!40000 ALTER TABLE `deliverys` DISABLE KEYS */;
-INSERT INTO `deliverys` VALUES (1,'2025-08-01',1,1,100,1,'Entrega completa'),(2,'2025-08-03',2,2,80,2,'Entrega parcial'),(3,'2025-08-05',3,3,50,1,'Entrega completa'),(4,'2025-08-07',4,4,70,2,'Entrega completa'),(5,'2025-08-10',5,5,120,1,'Entrega parcial');
-/*!40000 ALTER TABLE `deliverys` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `description` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Table structure for table `employees`
+-- Volcado de datos para la tabla `categories`
 --
 
-DROP TABLE IF EXISTS `employees`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `employees` (
-  `id_employee` int NOT NULL AUTO_INCREMENT,
-  `employee_name` varchar(255) DEFAULT NULL,
-  `working_day` varchar(255) DEFAULT NULL,
-  `employee_email` varchar(255) DEFAULT NULL,
-  `phone` varchar(255) DEFAULT NULL,
-  `address` varchar(255) DEFAULT NULL,
-  `charge` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id_employee`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+INSERT INTO `categories` (`id`, `name`, `description`, `created_at`) VALUES
+(1, 'Electronics', 'Electronic devices and accessories', '2025-09-02 21:11:17'),
+(2, 'Home Goods', 'Products for the home and kitchen', '2025-09-02 21:11:17'),
+(3, 'Groceries', 'Food and beverage items', '2025-09-02 21:11:17');
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `employees`
+-- Estructura de tabla para la tabla `products`
 --
 
-LOCK TABLES `employees` WRITE;
-/*!40000 ALTER TABLE `employees` DISABLE KEYS */;
-INSERT INTO `employees` VALUES (1,'Ana López','Lunes a Viernes','ana.lopez@farmacia.com','555-1234','Av. Central 123','administrador'),(2,'Carlos Pérez','Lunes a Sábado','carlos.perez@farmacia.com','555-5678','Calle Norte 456','empleado'),(3,'Ana López','Lunes a Viernes','ana.lopez@farmacia.com','555-1234','Av. Central 123','administrador'),(4,'Carlos Pérez','Lunes a Sábado','carlos.perez@farmacia.com','555-5678','Calle Norte 456','empleado');
-/*!40000 ALTER TABLE `employees` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `products`
---
-
-DROP TABLE IF EXISTS `products`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `products` (
-  `id_product` int NOT NULL AUTO_INCREMENT,
-  `product_name` varchar(255) DEFAULT NULL,
-  `description` varchar(1000) DEFAULT NULL,
-  `amount` int DEFAULT NULL,
-  `price` int DEFAULT NULL,
-  `brand` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id_product`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` text DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `barcode` varchar(50) DEFAULT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `cost_price` decimal(10,2) NOT NULL,
+  `stock` int(11) NOT NULL DEFAULT 0,
+  `min_stock_level` int(11) DEFAULT 10,
+  `supplier_id` int(11) DEFAULT NULL,
+  `expiration_date` date DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `products`
+-- Volcado de datos para la tabla `products`
 --
 
-LOCK TABLES `products` WRITE;
-/*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (1,'Paracetamol 500mg','Analgésico y antipirético',100,25,'Genfar'),(2,'Ibuprofeno 400mg','Antiinflamatorio no esteroideo',80,35,'MK'),(3,'Amoxicilina 500mg','Antibiótico de amplio espectro',50,60,'Sandoz'),(4,'Omeprazol 20mg','Inhibidor de bomba de protones',70,40,'Pfizer'),(5,'Loratadina 10mg','Antihistamínico',120,20,'Genfar');
-/*!40000 ALTER TABLE `products` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `products` (`id`, `name`, `description`, `category_id`, `barcode`, `price`, `cost_price`, `stock`, `min_stock_level`, `supplier_id`, `expiration_date`, `created_at`, `updated_at`) VALUES
+(1, 'Wireless Mouse', 'Ergonomic wireless mouse with USB receiver.', 1, '123456789012', 25.50, 15.00, 150, 20, 1, '2026-10-01', '2025-09-02 21:11:17', '2025-09-02 23:17:59'),
+(2, 'Coffee Maker', '12-cup automatic coffee maker with a thermal carafe.', 2, '234567890123', 65.00, 40.00, 50, 10, 2, '2029-12-20', '2025-09-02 21:11:17', '2025-09-02 23:18:50'),
+(3, 'Organic Apples', 'A bag of fresh, organic apples.', 3, '345678901234', 1.99, 1.20, 200, 50, 3, '2025-10-01', '2025-09-02 21:11:17', '2025-09-02 21:11:17'),
+(4, 'Laptop Stand', 'Adjustable aluminum laptop stand.', 1, '456789012345', 35.00, 20.00, 75, 15, 1, '2025-06-14', '2025-09-02 21:11:17', '2025-09-02 23:19:48'),
+(5, 'Mixing Bowl Set', 'Set of 3 stainless steel mixing bowls.', 2, '567890123456', 18.75, 10.50, 120, 25, 2, '2030-05-05', '2025-09-02 21:11:17', '2025-09-02 23:20:14');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `requests`
+-- Estructura de tabla para la tabla `sales`
 --
 
-DROP TABLE IF EXISTS `requests`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `requests` (
-  `id_request` int NOT NULL AUTO_INCREMENT,
-  `id_employee` int DEFAULT NULL,
-  `id_product` int DEFAULT NULL,
-  `amount` int DEFAULT NULL,
-  `request_date` varchar(255) DEFAULT NULL,
-  `response_date` varchar(255) DEFAULT NULL,
-  `request_state` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id_request`),
-  KEY `id_employee` (`id_employee`),
-  KEY `id_product` (`id_product`),
-  CONSTRAINT `requests_ibfk_1` FOREIGN KEY (`id_employee`) REFERENCES `employees` (`id_employee`),
-  CONSTRAINT `requests_ibfk_2` FOREIGN KEY (`id_product`) REFERENCES `products` (`id_product`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE `sales` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `total_amount` decimal(10,2) NOT NULL,
+  `payment_method` enum('cash','credit_card','debit_card','transfer') NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `requests`
+-- Estructura de tabla para la tabla `sale_items`
 --
 
-LOCK TABLES `requests` WRITE;
-/*!40000 ALTER TABLE `requests` DISABLE KEYS */;
-INSERT INTO `requests` VALUES (1,2,1,20,'2025-08-12','2025-08-13','Aprobado'),(2,2,2,15,'2025-08-14','2025-08-15','Pendiente'),(3,2,5,10,'2025-08-16','2025-08-17','Rechazado'),(4,2,3,5,'2025-08-17','2025-08-18','Aprobado'),(5,2,4,8,'2025-08-18','2025-08-19','Pendiente');
-/*!40000 ALTER TABLE `requests` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE `sale_items` (
+  `id` int(11) NOT NULL,
+  `sale_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `unit_price` decimal(10,2) NOT NULL,
+  `subtotal` decimal(10,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `suppliers`
+-- Estructura de tabla para la tabla `suppliers`
 --
 
-DROP TABLE IF EXISTS `suppliers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `suppliers` (
-  `id_supplier` int NOT NULL AUTO_INCREMENT,
-  `supplier_name` varchar(255) DEFAULT NULL,
-  `supplier_email` varchar(255) DEFAULT NULL,
-  `phone` varchar(255) DEFAULT NULL,
-  `address` varchar(255) DEFAULT NULL,
-  `id_product` int DEFAULT NULL,
-  `amount` int DEFAULT NULL,
-  `brand` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id_supplier`),
-  KEY `id_product` (`id_product`),
-  CONSTRAINT `suppliers_ibfk_1` FOREIGN KEY (`id_product`) REFERENCES `products` (`id_product`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `contact_person` varchar(100) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `suppliers`
+-- Volcado de datos para la tabla `suppliers`
 --
 
-LOCK TABLES `suppliers` WRITE;
-/*!40000 ALTER TABLE `suppliers` DISABLE KEYS */;
-INSERT INTO `suppliers` VALUES (1,'Distribuidora SaludPlus','contacto@saludplus.com','321-1111','Zona Industrial 12',1,500,'Genfar'),(2,'Farmedex S.A.','ventas@farmedex.com','322-2222','Av. de la Salud 34',2,300,'MK'),(3,'Medicent S.A.','info@medicent.com','323-3333','Calle Farma 78',3,200,'Sandoz'),(4,'BioPharma','soporte@biopharma.com','324-4444','Carrera 10 #5-30',4,250,'Pfizer'),(5,'AlfaMedic','logistica@alfamedic.com','325-5555','Diagonal 15 #23',5,400,'Genfar');
-/*!40000 ALTER TABLE `suppliers` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `suppliers` (`id`, `name`, `contact_person`, `phone`, `email`, `address`, `created_at`) VALUES
+(1, 'Tech Distributors Inc.', 'Sarah Jones', '555-123-4567', 'sarah.j@techdist.com', '123 Tech Lane, Silicon Valley', '2025-09-02 21:11:17'),
+(2, 'Home Essentials Co.', 'Michael Chen', '555-987-6543', 'm.chen@homeessentials.com', '456 Retail Blvd, Commerce City', '2025-09-02 21:11:17'),
+(3, 'Fresh Foods Suppliers', 'Jessica Garcia', '555-555-1212', 'jessica.g@freshfoods.com', '789 Farm Road, Agri Town', '2025-09-02 21:11:17');
+
+-- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Estructura de tabla para la tabla `users`
 --
 
-DROP TABLE IF EXISTS `users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
-  `id_user` int NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(255) DEFAULT NULL,
-  `password_user` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `full_name` varchar(100) NOT NULL,
+  `role` enum('admin','employee') NOT NULL DEFAULT 'employee',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `users`
+-- Volcado de datos para la tabla `users`
 --
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'administrador','administrador');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `full_name`, `role`, `created_at`, `updated_at`) VALUES
+(1, 'admin', 'admin@farmacia.com', '$2a$10$nD0K7I0YrHgHhzTDsN9G4uImVInGzb73YWRUH4KMSFo07J6ShVwxK', 'Administrador', 'admin', '2025-09-01 14:04:34', '2025-09-01 14:04:34');
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indices de la tabla `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `barcode` (`barcode`),
+  ADD KEY `category_id` (`category_id`);
+
+--
+-- Indices de la tabla `sales`
+--
+ALTER TABLE `sales`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indices de la tabla `sale_items`
+--
+ALTER TABLE `sale_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sale_id` (`sale_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indices de la tabla `suppliers`
+--
+ALTER TABLE `suppliers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `sales`
+--
+ALTER TABLE `sales`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `sale_items`
+--
+ALTER TABLE `sale_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `suppliers`
+--
+ALTER TABLE `suppliers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `products`
+--
+ALTER TABLE `products`
+  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL;
+
+--
+-- Filtros para la tabla `sales`
+--
+ALTER TABLE `sales`
+  ADD CONSTRAINT `sales_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Filtros para la tabla `sale_items`
+--
+ALTER TABLE `sale_items`
+  ADD CONSTRAINT `sale_items_ibfk_1` FOREIGN KEY (`sale_id`) REFERENCES `sales` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `sale_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2025-08-28 22:17:06

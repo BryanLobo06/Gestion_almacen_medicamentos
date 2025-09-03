@@ -17,9 +17,74 @@ const db = require('./config/database');
 
 // Import API routes
 const apiRoutes = require('./routes/api');
+const salesRoutes = require('./routes/sales');
+const productsRoutes = require('./routes/products');
 
 // Initialize Express app
 const app = express();
+
+// Configuración de Content Security Policy
+const cspConfig = {
+  directives: {
+    defaultSrc: ["'self'"],
+    scriptSrc: [
+      "'self'",
+      "'unsafe-inline'",
+      "'unsafe-eval'",
+      "https://cdn.jsdelivr.net",
+      "https://code.jquery.com",
+      "https://cdn.datatables.net",
+      "https://unpkg.com"
+    ],
+    scriptSrcElem: [
+      "'self'",
+      "https://cdn.jsdelivr.net",
+      "https://code.jquery.com",
+      "https://cdn.datatables.net",
+      "https://unpkg.com"
+    ],
+    styleSrc: [
+      "'self'",
+      "'unsafe-inline'",
+      "https://cdn.jsdelivr.net",
+      "https://cdn.datatables.net",
+      "https://unpkg.com"
+    ],
+    styleSrcElem: [
+      "'self'",
+      "'unsafe-inline'",
+      "https://cdn.jsdelivr.net",
+      "https://cdn.datatables.net",
+      "https://unpkg.com"
+    ],
+    imgSrc: [
+      "'self'",
+      "data:",
+      "https:",
+      "https://cdn.jsdelivr.net",
+      "https://unpkg.com"
+    ],
+    connectSrc: [
+      "'self'",
+      "http://localhost:3000"
+    ],
+    fontSrc: [
+      "'self'",
+      "data:",
+      "https://cdn.jsdelivr.net",
+      "https://unpkg.com"
+    ],
+    frameSrc: ["'self'"],
+    objectSrc: ["'none'"],
+    // Deshabilitar upgradeInsecureRequests en desarrollo para evitar redirecciones
+    upgradeInsecureRequests: process.env.NODE_ENV === 'production' ? [] : null
+  }
+};
+
+// Aplicar CSP
+app.use(helmet({
+  contentSecurityPolicy: cspConfig
+}));
 
 // Create HTTP server
 const server = createServer(app);
@@ -93,8 +158,10 @@ app.use(express.static(path.join(__dirname, 'public'), {
   index: ['login.html']
 }));
 
-// API Routes
+// API Routes - Mount products routes first to avoid conflicts
+app.use('/api', productsRoutes);
 app.use('/api', apiRoutes);
+app.use('/api/sales', salesRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {

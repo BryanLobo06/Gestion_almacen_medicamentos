@@ -3,113 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Categorías - Farmacia App</title>
+    <title>Categorías - Farmacia App</title>
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://code.jquery.com https://cdn.datatables.net;
+        style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.datatables.net https://cdnjs.cloudflare.com;
+        font-src 'self' https: data:;
+        img-src 'self' data: https:;
+        connect-src 'self' http://localhost:3000 ws://localhost:3000;
+    ">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/style.css">
-    <style>
-        .category-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            margin-bottom: 20px;
-        }
-        .category-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-        .action-buttons .btn {
-            margin-right: 5px;
-        }
-    </style>
 </head>
 <body>
     <!-- Header -->
-    <header class="bg-primary text-white p-3">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-center">
-                <h1 class="h4 mb-0">
-                    <i class="fas fa-tags me-2"></i>Gestión de Categorías
-                </h1>
-                <div>
-                    <a href="/dashboard" class="btn btn-light btn-sm me-2">
-                        <i class="fas fa-arrow-left me-1"></i> Volver
-                    </a>
-                    <button class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
-                        <i class="fas fa-plus me-1"></i> Nueva Categoría
-                    </button>
-                </div>
+    <header class="dashboard-header">
+        <a href="/" class="header-brand">Farmacia App</a>
+        <button type="button" class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav class="header-nav" aria-label="Navegación principal">
+            <div class="user-info" id="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span id="username">Usuario</span>
             </div>
-        </div>
+            <a href="#" class="logout-btn" id="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Cerrar sesión</span>
+            </a>
+        </nav>
     </header>
 
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebarMenu">
+        <nav class="sidebar-nav" aria-label="Navegación lateral">
+            <ul>
+                <li class="nav-item">
+                    <a href="/dashboard.html" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/products.html" class="nav-link">
+                        <i class="fas fa-box"></i>
+                        <span>Productos</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/categories.html" class="nav-link active">
+                        <i class="fas fa-tags"></i>
+                        <span>Categorías</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/reports.html" class="nav-link">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Reportes</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/settings.html" class="nav-link">
+                        <i class="fas fa-cog"></i>
+                        <span>Configuración</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
     <!-- Main Content -->
-    <main class="py-4">
-        <div class="container">
-            <!-- Search and Filter -->
-            <div class="row mb-4">
-                <div class="col-md-6">
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="fas fa-search"></i></span>
-                        <input type="text" id="searchInput" class="form-control" placeholder="Buscar categorías...">
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <select class="form-select" id="statusFilter">
-                        <option value="">Todas las categorías</option>
-                        <option value="active">Activas</option>
-                        <option value="inactive">Inactivas</option>
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <button class="btn btn-outline-secondary w-100" id="resetFilters">
-                        <i class="fas fa-sync-alt me-1"></i> Restablecer
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Gestión de Categorías</h1>
+            <div class="page-actions">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                    <i class="fas fa-plus"></i> Nueva Categoría
+                </button>
+            </div>
+        </div>
+        <div id="alerts-container"></div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3>Lista de Categorías</h3>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Buscar categorías...">
+                    <button type="button" id="searchButton" aria-label="Buscar">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                        <span class="visually-hidden">Buscar</span>
                     </button>
                 </div>
             </div>
-
-            <!-- Categories Grid -->
-            <div class="row" id="categoriesContainer">
-                <!-- Categories will be loaded here dynamically -->
-                <div class="col-12 text-center py-5">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Cargando...</span>
+            <div class="card-body">
+                <div class="row" id="categoriesContainer">
+                    <!-- Categories will be loaded here dynamically -->
+                    <div class="col-12 text-center py-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Cargando...</span>
+                        </div>
+                        <p class="mt-2">Cargando categorías...</p>
                     </div>
-                    <p class="mt-2">Cargando categorías...</p>
                 </div>
             </div>
         </div>
     </main>
 
     <!-- Add Category Modal -->
-    <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" role="dialog">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title"><i class="fas fa-plus-circle me-2"></i>Nueva Categoría</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-header">
+                    <h2 class="modal-title h5" id="addCategoryModalLabel">
+                        <i class="fas fa-plus-circle me-2" aria-hidden="true"></i>Nueva Categoría
+                    </h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <form id="addCategoryForm">
                     <div class="modal-body">
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label for="categoryName" class="form-label">Nombre de la categoría</label>
                             <input type="text" class="form-control" id="categoryName" required>
                         </div>
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label for="categoryDescription" class="form-label">Descripción</label>
                             <textarea class="form-control" id="categoryDescription" rows="3"></textarea>
                         </div>
-                        <div class="form-check form-switch mb-3">
-                            <input class="form-check-input" type="checkbox" id="categoryStatus" checked>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="categoryStatus" checked>
                             <label class="form-check-label" for="categoryStatus">Categoría activa</label>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save me-1"></i> Guardar
-                        </button>
+                        <button type="submit" class="btn btn-primary">Agregar Categoría</button>
                     </div>
                 </form>
             </div>
@@ -117,34 +151,34 @@
     </div>
 
     <!-- Edit Category Modal -->
-    <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header bg-warning text-dark">
-                    <h5 class="modal-title"><i class="fas fa-edit me-2"></i>Editar Categoría</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editCategoryModalLabel">
+                        <i class="fas fa-edit me-2"></i>Editar Categoría
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <form id="editCategoryForm">
                     <input type="hidden" id="editCategoryId">
                     <div class="modal-body">
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label for="editCategoryName" class="form-label">Nombre de la categoría</label>
                             <input type="text" class="form-control" id="editCategoryName" required>
                         </div>
-                        <div class="mb-3">
+                        <div class="form-group">
                             <label for="editCategoryDescription" class="form-label">Descripción</label>
                             <textarea class="form-control" id="editCategoryDescription" rows="3"></textarea>
                         </div>
-                        <div class="form-check form-switch mb-3">
-                            <input class="form-check-input" type="checkbox" id="editCategoryStatus">
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="editCategoryStatus">
                             <label class="form-check-label" for="editCategoryStatus">Categoría activa</label>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-warning">
-                            <i class="fas fa-save me-1"></i> Actualizar
-                        </button>
+                        <button type="submit" class="btn btn-primary">Actualizar Categoría</button>
                     </div>
                 </form>
             </div>
@@ -152,12 +186,14 @@
     </div>
 
     <!-- Delete Confirmation Modal -->
-    <div class="modal fade" id="deleteCategoryModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal fade" id="deleteCategoryModal" tabindex="-1" aria-labelledby="deleteCategoryModalLabel" role="dialog">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title"><i class="fas fa-exclamation-triangle me-2"></i>Confirmar Eliminación</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h2 class="modal-title h5" id="deleteCategoryModalLabel">
+                        <i class="fas fa-exclamation-triangle me-2" aria-hidden="true"></i>Confirmar Eliminación
+                    </h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     <p>¿Estás seguro de que deseas eliminar esta categoría? Esta acción no se puede deshacer.</p>
@@ -165,27 +201,81 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger" id="confirmDelete">
-                        <i class="fas fa-trash-alt me-1"></i> Eliminar
-                    </button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">Eliminar</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Toast Notifications -->
-    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-        <div id="toast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body"></div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-        </div>
-    </div>
-
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery (required by Bootstrap and DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" 
+            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" 
+            crossorigin="anonymous"></script>
+
+    <!-- Popper.js (required for Bootstrap tooltips) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" 
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" 
+            crossorigin="anonymous"></script>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" 
+            crossorigin="anonymous">
+        // Asegurarse de que Bootstrap esté disponible globalmente
+        window.bootstrap = bootstrap || {};
+    </script>
+
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/js/categories.js"></script>
+
+    <!-- Cargar la lógica principal de categorías -->
+    <script src="/js/categories.js" type="module"></script>
+
+    <!-- Inicialización de componentes -->
+    <script>
+        // Esperar a que todo esté cargado
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cargar el script de inicialización
+            const script = document.createElement('script');
+            script.src = '/js/init-categories.js';
+            script.onload = function() {
+                // Inicializar tooltips después de cargar init-categories.js
+                const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                tooltipTriggerList.forEach(function(tooltipTriggerEl) {
+                    new bootstrap.Tooltip(tooltipTriggerEl);
+                });
+                
+                // Inicializar popovers
+                const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+                popoverTriggerList.forEach(function(popoverTriggerEl) {
+                    new bootstrap.Popover(popoverTriggerEl);
+                });
+            };
+            document.body.appendChild(script);
+            
+            // Inicializar el menú lateral
+            const menuToggle = document.getElementById('menuToggle');
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    document.body.classList.toggle('sidebar-collapsed');
+                });
+            }
+            
+            // Funcionalidad de logout
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Aquí iría la lógica de logout
+                    window.location.href = '/login.html';
+                });
+            }
+        });
+    </script>
 </body>
 </html>

@@ -4,158 +4,229 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Productos - Farmacia App</title>
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .products-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .page-title {
+            font-size: 24px;
+            color: #333;
+        }
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .card-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        .btn-edit {
+            background-color: #17a2b8;
+        }
+        .btn-delete {
+            background-color: #dc3545;
+        }
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
-    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="/">Farmacia App</a>
-        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+    <!-- Header -->
+    <header class="dashboard-header">
+        <a href="/" class="header-brand">Farmacia App</a>
+        <button type="button" class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
         </button>
-        <div class="navbar-nav">
-            <div class="nav-item text-nowrap d-flex align-items-center text-light me-3">
-                <i class="bi bi-person-circle me-2"></i>
-                <span id="username">Cargando...</span>
+        <nav class="header-nav" aria-label="Navegación principal">
+            <div class="user-info" id="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span id="username">Usuario</span>
             </div>
-            <a class="nav-link px-3" href="#" id="logout-btn">Cerrar sesión</a>
-        </div>
+            <a href="#" class="logout-btn" id="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Cerrar sesión</span>
+            </a>
+        </nav>
     </header>
 
-    <div class="container-fluid">
-        <div class="row">
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-                <div class="position-sticky pt-3">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/dashboard.html">
-                                <i class="bi bi-speedometer2 me-2"></i>
-                                Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="/products.html">
-                                <i class="bi bi-box-seam me-2"></i>
-                                Productos
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/categories.html">
-                                <i class="bi bi-tags me-2"></i>
-                                Categorías
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/sales.html">
-                                <i class="bi bi-cart me-2"></i>
-                                Ventas
-                            </a>
-                        </li>
-                        <li class="nav-item admin-only d-none">
-                            <a class="nav-link" href="/reports.html">
-                                <i class="bi bi-graph-up me-2"></i>
-                                Reportes
-                            </a>
-                        </li>
-                        <li class="nav-item admin-only d-none">
-                            <a class="nav-link" href="/users.html">
-                                <i class="bi bi-people me-2"></i>
-                                Usuarios
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebarMenu">
+        <nav class="sidebar-nav" aria-label="Navegación lateral">
+            <ul>
+                <li class="nav-item">
+                    <a href="/dashboard.html" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/products.html" class="nav-link active">
+                        <i class="fas fa-box"></i>
+                        <span>Productos</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/categories.html" class="nav-link">
+                        <i class="fas fa-tags"></i>
+                        <span>Categorías</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/reports.html" class="nav-link">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Reportes</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/settings.html" class="nav-link">
+                        <i class="fas fa-cog"></i>
+                        <span>Configuración</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
 
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <div id="alerts-container"></div>
-                
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Gestión de Productos</h1>
-                    <div class="btn-toolbar mb-2 mb-md-0">
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
-                            <i class="bi bi-plus-circle me-1"></i> Nuevo Producto
-                        </button>
-                    </div>
-                </div>
-
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <div class="row align-items-center">
-                            <div class="col-md-6">
-                                <h5 class="mb-0">Lista de Productos</h5>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="searchInput" placeholder="Buscar productos...">
-                                    <button class="btn btn-outline-secondary" type="button" id="searchButton">
-                                        <i class="bi bi-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover" id="productsTable">
-                                <thead>
-                                    <tr>
-                                        <th>Código</th>
-                                        <th>Nombre</th>
-                                        <th>Categoría</th>
-                                        <th>Precio</th>
-                                        <th>Stock</th>
-                                        <th>Estado</th>
-                                        <th class="text-end">Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Will be populated by JavaScript -->
-                                    <tr>
-                                        <td colspan="7" class="text-center">
-                                            <div class="spinner-border text-primary" role="status">
-                                                <span class="visually-hidden">Cargando...</span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </main>
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Gestión de Productos</h1>
+            <div class="page-actions">
+                <button type="button" class="btn" id="newProductBtn">
+                    <i class="fas fa-plus"></i> Nuevo Producto
+                </button>
+            </div>
         </div>
-    </div>
+        <div id="alerts-container"></div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3>Lista de Productos</h3>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Buscar productos...">
+                    <button type="button" id="searchButton">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="productsTable">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Nombre</th>
+                                <th>Categoría</th>
+                                <th>Precio</th>
+                                <th>Stock</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="7" class="text-center">
+                                    <div class="spinner"></div>
+                                    <span>Cargando productos...</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <!-- Add/Edit Product Modal -->
-    <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="productModalLabel">Nuevo Producto</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form id="productForm" novalidate>
-                    <div class="modal-body">
-                        <input type="hidden" id="productId">
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="code" class="form-label">Código de Barras</label>
-                                <input type="text" class="form-control" id="code" required>
-                                <div class="invalid-feedback">
-                                    Por favor ingrese el código de barras.
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="name" class="form-label">Nombre del Producto</label>
-                                <input type="text" class="form-control" id="name" required>
-                                <div class="invalid-feedback">
-                                    Por favor ingrese el nombre del producto.
-                                </div>
-                            </div>
+    <div id="productModal" class="modal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
+        <div style="background-color: #fefefe; margin: 5% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 800px; border-radius: 8px; position: relative;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #eee;">
+                <h2 id="productModalLabel" style="margin: 0; font-size: 1.25rem;">Nuevo Producto</h2>
+                <button type="button" onclick="document.getElementById('productModal').style.display='none'" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            </div>
+            <form id="productForm" novalidate>
+                <input type="hidden" id="productId">
+                <div style="display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 15px;">
+                    <div style="flex: 1; min-width: 250px;">
+                        <label for="code" style="display: block; margin-bottom: 5px; font-weight: 500;">Código de Barras</label>
+                        <input type="text" id="code" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                        <div class="error-message" style="color: #dc3545; font-size: 0.875rem; display: none;">
+                            Por favor ingrese el código de barras.
                         </div>
+                    </div>
+                    <div style="flex: 1; min-width: 250px;">
+                        <label for="name" style="display: block; margin-bottom: 5px; font-weight: 500;">Nombre del Producto</label>
+                        <input type="text" id="name" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                        <div class="error-message" style="color: #dc3545; font-size: 0.875rem; display: none;">
+                            Por favor ingrese el nombre del producto.
+                        </div>
+                    </div>
+                </div>
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="category" class="form-label">Categoría</label>
@@ -249,12 +320,12 @@
     </div>
 
     <!-- Delete Confirmation Modal -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" role="dialog">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Confirmar Eliminación</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h2 class="modal-title h5" id="deleteModalLabel">Confirmar Eliminación</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
                     ¿Está seguro que desea eliminar este producto? Esta acción no se puede deshacer.
@@ -267,11 +338,59 @@
         </div>
     </div>
 
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-    <script src="/js/dashboard.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Asegurar que Bootstrap esté disponible globalmente -->
+    <script>
+        window.bootstrap = bootstrap || {};
+    </script>
+
+    <!-- Custom JS -->
+    <script>
+        // Mostrar/ocultar modal
+        document.getElementById('newProductBtn').addEventListener('click', function() {
+            document.getElementById('productModal').style.display = 'block';
+            document.getElementById('productForm').reset();
+            document.getElementById('productId').value = '';
+            document.getElementById('productModalLabel').textContent = 'Nuevo Producto';
+        });
+
+        // Cerrar modal al hacer clic en la X
+        document.querySelectorAll('.close').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.getElementById('productModal').style.display = 'none';
+            });
+        });
+
+        // Cerrar modal al hacer clic fuera del contenido
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('productModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Validación de formulario
+        document.getElementById('productForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Aquí iría la lógica para guardar el producto
+            console.log('Formulario enviado');
+            // Cerrar el modal después de guardar
+            document.getElementById('productModal').style.display = 'none';
+        });
+
+        // Cargar productos
+        document.addEventListener('DOMContentLoaded', function() {
+            // Aquí iría la lógica para cargar los productos desde la API
+            console.log('Cargando productos...');
+        });
+    </script>
     <script src="/js/products.js"></script>
 </body>
 </html>
